@@ -36,8 +36,8 @@ const generateAccessToken = (username) => {
 // })
 
 
-//הורץ
-//create collection:
+// הורץ
+// create collection:
 // router.get("/createUserColection", () => {
 //   MongoClient.connect(url, function (err, db) {
 //     if (err) throw err;
@@ -51,45 +51,45 @@ const generateAccessToken = (username) => {
 // })
 
 //עובד
-// /* GET users listing. */
-// router.get('/login', function (req, res) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-//   const { user_id, user_password } = req.query;
-//   //Check the pwd in the server
-//   const token = generateAccessToken(user_id);
-//   console.log("token", token);
-//   return res.json({ token }).send();
-
-//   // res.send('respond with a resource');
-// });
-
-
-
-router.get("/login", function (req, res) {
+/* GET users listing. */
+router.get('/login', function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
   const { user_id, user_password } = req.query;
   //Check the pwd in the server
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    var dbo = db.db("Community");
-    var query = { user_id };
-    dbo.collection("Users").find(query).toArray(function (err, result) {
-      if (err) throw err;
-      if (!result || result.length === 0) {
-        return res.status(401).send();
-      }
-      db.close();
-      if (result[0].user_password === user_password) {
-        const token = generateAccessToken(user_id);
-        console.log("token", token);
-        return res.json({ token }).send();
-      } else {
-        return res.status(401).send();
-      }
-    });
-  });
+  const token = generateAccessToken(user_id);
+  console.log("token", token);
+  return res.json({ token }).send();
 
+  // res.send('respond with a resource');
 });
+
+
+
+// router.get("/login", function (req, res) {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+//   const { user_id, user_password } = req.query;
+//   //Check the pwd in the server
+//   MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     var dbo = db.db("Community");
+//     var query = { user_id };
+//     dbo.collection("Users").find(query).toArray(function (err, result) {
+//       if (err) throw err;
+//       if (!result || result.length === 0) {
+//         return res.status(401).send();
+//       }
+//       db.close();
+//       if (result[0].user_password === user_password) {
+//         const token = generateAccessToken(user_id);
+//         console.log("token", token);
+//         return res.json({ token }).send();
+//       } else {
+//         return res.status(401).send();
+//       }
+//     });
+//   });
+
+// });
 
 
 
@@ -97,6 +97,7 @@ router.get("/login", function (req, res) {
 
 router.post("/signup", function(req,res) {
   const user = req.body;
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
   //check
   MongoClient.connect(url,function(err,db){
     if(err) throw err;
@@ -111,6 +112,7 @@ router.post("/signup", function(req,res) {
     return res.json({ token }).send();
   });
 });
+
 
 
 
